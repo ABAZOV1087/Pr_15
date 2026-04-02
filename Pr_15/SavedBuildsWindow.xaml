@@ -1,0 +1,55 @@
+﻿<Window x:Class="Pr_15.SavedBuildsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="История сохраненных сборок" Height="500" Width="900" MinWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Список сборок" Margin="10">
+                <ListView x:Name="LvBuilds" SelectionChanged="LvBuilds_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Название" DisplayMemberBinding="{Binding BuildName}" Width="150"/>
+                            <GridViewColumn Header="Автор" DisplayMemberBinding="{Binding AuthorName}" Width="100"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+
+            <GroupBox Header="Состав выбранной сборки" Grid.Column="1" Margin="10">
+                <ListView x:Name="LvDetails">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Categories.Name}" Width="120"/>
+                            <GridViewColumn Header="Модель" DisplayMemberBinding="{Binding ModelName}" Width="250"/>
+                            <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price}" Width="80"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+        </Grid>
+
+        <Border Grid.Row="1" Background="#F0F0F0" BorderBrush="Gray" BorderThickness="0,1,0,0">
+            <Button Content="← Назад в конструктор" 
+                    Width="180" 
+                    Height="35" 
+                    Margin="15" 
+                    HorizontalAlignment="Left" 
+                    FontSize="14"
+                    Cursor="Hand"
+                    Click="BtnBack_Click"/>
+        </Border>
+    </Grid>
+</Window>

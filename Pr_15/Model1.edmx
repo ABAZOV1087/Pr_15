@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PCBuilderAbazovModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BuildComponents">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuildID" Type="int" />
+          <Property Name="ComponentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Builds">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuildName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AuthorName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Components">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="ManufacturerID" Type="int" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Socket" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormFactor" Type="nvarchar" MaxLength="50" />
+          <Property Name="RamType" Type="nvarchar" MaxLength="20" />
+          <Property Name="PowerWatt" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Manufacturers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BuildComp__Build__5535A963">
+          <End Role="Builds" Type="Self.Builds" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BuildComponents" Type="Self.BuildComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Builds">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuildComponents">
+              <PropertyRef Name="BuildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BuildComp__Compo__5629CD9C">
+          <End Role="Components" Type="Self.Components" Multiplicity="0..1" />
+          <End Role="BuildComponents" Type="Self.BuildComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Components">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuildComponents">
+              <PropertyRef Name="ComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Component__Categ__4E88ABD4">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Component__Manuf__4F7CD00D">
+          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="0..1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="ManufacturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PCBuilderAbazovModelContainer">
+          <EntitySet Name="BuildComponents" EntityType="Self.BuildComponents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Builds" EntityType="Self.Builds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BuildComp__Build__5535A963" Association="Self.FK__BuildComp__Build__5535A963">
+            <End Role="Builds" EntitySet="Builds" />
+            <End Role="BuildComponents" EntitySet="BuildComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BuildComp__Compo__5629CD9C" Association="Self.FK__BuildComp__Compo__5629CD9C">
+            <End Role="Components" EntitySet="Components" />
+            <End Role="BuildComponents" EntitySet="BuildComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Component__Categ__4E88ABD4" Association="Self.FK__Component__Categ__4E88ABD4">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Component__Manuf__4F7CD00D" Association="Self.FK__Component__Manuf__4F7CD00D">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PCBuilderAbazovModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BuildComponents">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuildID" Type="Int32" />
+          <Property Name="ComponentID" Type="Int32" />
+          <NavigationProperty Name="Builds" Relationship="Self.FK__BuildComp__Build__5535A963" FromRole="BuildComponents" ToRole="Builds" />
+          <NavigationProperty Name="Components" Relationship="Self.FK__BuildComp__Compo__5629CD9C" FromRole="BuildComponents" ToRole="Components" />
+        </EntityType>
+        <EntityType Name="Builds">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuildName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AuthorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BuildComponents" Relationship="Self.FK__BuildComp__Build__5535A963" FromRole="Builds" ToRole="BuildComponents" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Components" Relationship="Self.FK__Component__Categ__4E88ABD4" FromRole="Categories" ToRole="Components" />
+        </EntityType>
+        <EntityType Name="Components">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="ManufacturerID" Type="Int32" />
+          <Property Name="ModelName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Socket" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormFactor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RamType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PowerWatt" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BuildComponents" Relationship="Self.FK__BuildComp__Compo__5629CD9C" FromRole="Components" ToRole="BuildComponents" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK__Component__Categ__4E88ABD4" FromRole="Components" ToRole="Categories" />
+          <NavigationProperty Name="Manufacturers" Relationship="Self.FK__Component__Manuf__4F7CD00D" FromRole="Components" ToRole="Manufacturers" />
+        </EntityType>
+        <EntityType Name="Manufacturers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Components" Relationship="Self.FK__Component__Manuf__4F7CD00D" FromRole="Manufacturers" ToRole="Components" />
+        </EntityType>
+        <Association Name="FK__BuildComp__Build__5535A963">
+          <End Role="Builds" Type="Self.Builds" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BuildComponents" Type="Self.BuildComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Builds">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuildComponents">
+              <PropertyRef Name="BuildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BuildComp__Compo__5629CD9C">
+          <End Role="Components" Type="Self.Components" Multiplicity="0..1" />
+          <End Role="BuildComponents" Type="Self.BuildComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Components">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuildComponents">
+              <PropertyRef Name="ComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Component__Categ__4E88ABD4">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Component__Manuf__4F7CD00D">
+          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="0..1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="ManufacturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PCBuilderAbazovEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BuildComponents" EntityType="Self.BuildComponents" />
+          <EntitySet Name="Builds" EntityType="Self.Builds" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="Components" EntityType="Self.Components" />
+          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" />
+          <AssociationSet Name="FK__BuildComp__Build__5535A963" Association="Self.FK__BuildComp__Build__5535A963">
+            <End Role="Builds" EntitySet="Builds" />
+            <End Role="BuildComponents" EntitySet="BuildComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BuildComp__Compo__5629CD9C" Association="Self.FK__BuildComp__Compo__5629CD9C">
+            <End Role="Components" EntitySet="Components" />
+            <End Role="BuildComponents" EntitySet="BuildComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Component__Categ__4E88ABD4" Association="Self.FK__Component__Categ__4E88ABD4">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Component__Manuf__4F7CD00D" Association="Self.FK__Component__Manuf__4F7CD00D">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PCBuilderAbazovModelContainer" CdmEntityContainer="PCBuilderAbazovEntities">
+          <EntitySetMapping Name="BuildComponents">
+            <EntityTypeMapping TypeName="PCBuilderAbazovModel.BuildComponents">
+              <MappingFragment StoreEntitySet="BuildComponents">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BuildID" ColumnName="BuildID" />
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Builds">
+            <EntityTypeMapping TypeName="PCBuilderAbazovModel.Builds">
+              <MappingFragment StoreEntitySet="Builds">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BuildName" ColumnName="BuildName" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="PCBuilderAbazovModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Components">
+            <EntityTypeMapping TypeName="PCBuilderAbazovModel.Components">
+              <MappingFragment StoreEntitySet="Components">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Socket" ColumnName="Socket" />
+                <ScalarProperty Name="FormFactor" ColumnName="FormFactor" />
+                <ScalarProperty Name="RamType" ColumnName="RamType" />
+                <ScalarProperty Name="PowerWatt" ColumnName="PowerWatt" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="PCBuilderAbazovModel.Manufacturers">
+              <MappingFragment StoreEntitySet="Manufacturers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
