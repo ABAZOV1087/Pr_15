@@ -19,4 +19,4 @@ namespace Pr_15
         public bool IsCase => CategoryID == 4;
         public bool IsCooler => CategoryID == 5;
     }
-}
+} 
