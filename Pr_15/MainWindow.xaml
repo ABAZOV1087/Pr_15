@@ -34,7 +34,7 @@
                             <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding DisplayPrice}" Width="100"/>
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </ListView> 
 
                 <Button Content="Добавить в сборку" Grid.Row="2" Height="35" Margin="5" Click="BtnAdd_Click"/>
             </Grid>
